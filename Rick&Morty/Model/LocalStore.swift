@@ -10,3 +10,4 @@ import Foundation
 let charactersURL = "https://rickandmortyapi.com/api/character"
 
 var arrayOfPeople: [Result] = []
+

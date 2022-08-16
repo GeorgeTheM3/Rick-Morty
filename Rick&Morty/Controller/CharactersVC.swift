@@ -40,12 +40,23 @@ extension CharactersVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CustomCell
-        cell.name.text = arrayOfPeople[indexPath.row].name
-        let imageURL = URL(string: arrayOfPeople[indexPath.row].image)
-        guard let url = imageURL, let imageData = try? Data(contentsOf: url) else { return cell }
+        
         DispatchQueue.main.async {
-            cell.image.image = UIImage(data: imageData)
+            cell.name.text = arrayOfPeople[indexPath.row].name
+            cell.species.text = arrayOfPeople[indexPath.row].species
+            cell.gender.text = arrayOfPeople[indexPath.row].gender
+            cell.origin.text = "Origin:\(arrayOfPeople[indexPath.row].origin.name)"
+            cell.location.text = "Location:\(arrayOfPeople[indexPath.row].location.name)"
+            
+        let imageURL = URL(string: arrayOfPeople[indexPath.row].image)
+        guard let url = imageURL, let imageData = try? Data(contentsOf: url) else { return }
+            DispatchQueue.main.async {
+                cell.image.image = UIImage(data: imageData)
+                cell.indicator.stopAnimating()
+                cell.indicator.isHidden = true
+            }
         }
         return cell
     }
@@ -55,4 +66,5 @@ extension CharactersVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
     }
+    
 }

@@ -17,4 +17,14 @@ struct Result: Decodable {
     let species: String
     let gender: String
     let image: String
+    let origin: Origin
+    let location: Location
+}
+
+struct Origin: Decodable {
+    let name: String
+}
+
+struct Location: Decodable {
+    let name: String
 }
