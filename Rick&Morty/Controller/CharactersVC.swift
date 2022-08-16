@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 
 class CharactersVC: UIViewController {
+    
+    
+    
     private var charectersView: CharactersView {
         return self.view as! CharactersView
     }
@@ -56,7 +59,6 @@ extension CharactersVC: UITableViewDataSource {
             DispatchQueue.main.async {
                 cell.image.image = UIImage(data: imageData)
                 cell.indicator.stopAnimating()
-                cell.indicator.isHidden = true
             }
         }
         return cell
@@ -69,6 +71,23 @@ extension CharactersVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let name = arrayOfPeople[indexPath.row].name
+        let species = arrayOfPeople[indexPath.row].species
+        let gender = arrayOfPeople[indexPath.row].gender
+        let origin = arrayOfPeople[indexPath.row].origin.name
+        let location = arrayOfPeople[indexPath.row].location.name
         
+        let vc = InfoVC()
+        let imageURL = URL(string: arrayOfPeople[indexPath.row].image)
+        guard let url = imageURL, let imageData = try? Data(contentsOf: url) else { return }
+            DispatchQueue.main.async {
+                vc.setImageCharacter(data: imageData)
+            }
+        vc.getInfo(name: name, species: species, gender: gender, origin: origin, location: location)
+        vc.setInfoView()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .flipHorizontal
+        present(vc, animated: true)
     }
+    
 }

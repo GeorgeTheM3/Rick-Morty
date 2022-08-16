@@ -50,6 +50,7 @@ class CustomCell: UITableViewCell {
         let indicator = UIActivityIndicatorView()
         indicator.isHidden = false
         indicator.startAnimating()
+        indicator.hidesWhenStopped = true
         return indicator
     }()
     
@@ -81,7 +82,7 @@ class CustomCell: UITableViewCell {
 //           super.awakeFromNib()
 //       }
     
-    func setViews() {
+    private func setViews() {
         addSubview(image)
         addSubview(name)
         addSubview(indicator)

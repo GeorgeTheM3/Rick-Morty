@@ -30,8 +30,8 @@ class CharactersView: UIView {
         setTableView()
     }
     
-    func setViews() {
-        self.addSubview(tableView)
+    private func setViews() {
+        addSubview(tableView)
     }
     
     private func setTableView() {
