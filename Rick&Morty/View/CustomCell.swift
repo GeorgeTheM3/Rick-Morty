@@ -12,6 +12,7 @@ import SnapKit
 class CustomCell: UITableViewCell {
     private(set) lazy var image: UIImageView = {
         let img = UIImageView()
+        img.contentMode = .scaleAspectFit
         return img
     }()
     
@@ -93,8 +94,9 @@ class CustomCell: UITableViewCell {
     private func setImage() {
         image.snp.makeConstraints { make in
             make.leading.equalTo(10)
-            make.height.equalTo(contentView.snp.height)
-            make.width.equalTo(100)
+            make.top.equalTo(5)
+            make.bottom.equalTo(-5)
+            make.width.equalTo(110)
         }
     }
     
@@ -128,7 +130,7 @@ class CustomCell: UITableViewCell {
     
     private func setLocation() {
         location.snp.makeConstraints { make in
-            make.bottom.equalTo(contentView.snp.bottom)
+            make.bottom.equalTo(contentView.snp.bottom).offset(-5)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
     }

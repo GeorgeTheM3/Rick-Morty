@@ -21,6 +21,7 @@ class CharactersVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        charectersView.backgroundColor = .white
         charectersView.tableView.dataSource = self
         charectersView.tableView.delegate = self
         NetworkManager.shared.fetchData(url: charactersURL) { characters in
@@ -64,7 +65,10 @@ extension CharactersVC: UITableViewDataSource {
 
 extension CharactersVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        100
+        120
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
 }
