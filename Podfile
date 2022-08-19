@@ -6,5 +6,8 @@ target 'Rick&Morty' do
   use_frameworks!
 
   # Pods for Rick&Morty
+
 pod 'SnapKit', '~> 5.6.0'
+pod 'SwiftLint'
+
 end

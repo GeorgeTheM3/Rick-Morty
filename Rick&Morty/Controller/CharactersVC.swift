@@ -10,84 +10,100 @@ import Foundation
 import UIKit
 
 class CharactersVC: UIViewController {
-    
-    
-    
     private var charectersView: CharactersView {
-        return self.view as! CharactersView
+        guard let view = self.view as? CharactersView else { return CharactersView()}
+        return view
     }
-    
     override func loadView() {
         super.loadView()
         self.view = CharactersView()
+        loadJSON(charactersURL)
     }
-    
+
+    private func loadJSON(_ url: String) {
+        NetworkManager.shared.fetchData(url: url) { characters in
+            DispatchQueue.main.async {
+                nextPage = characters.info.next
+                prevPage = characters.info.prev ?? ""
+                for item in characters.results {
+                    arrayOfCharacters.append(item)
+                }
+                self.charectersView.tableView.reloadData()
+            }
+            for item in characters.results {
+                NetworkManager.shared.loadImages(url: item.image) {
+                    DispatchQueue.main.async {
+                        self.charectersView.tableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         charectersView.backgroundColor = .white
         charectersView.tableView.dataSource = self
         charectersView.tableView.delegate = self
-        NetworkManager.shared.fetchData(url: charactersURL) { characters in
-            DispatchQueue.main.async {
-                for i in characters.results {
-                    arrayOfPeople.append(i)
-                }
-                self.charectersView.tableView.reloadData()
-            }
-        }
     }
 }
 
 extension CharactersVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        arrayOfPeople.count
+        arrayOfCharacters.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! CustomCell
-        
-        DispatchQueue.main.async {
-            cell.name.text = arrayOfPeople[indexPath.row].name
-            cell.species.text = arrayOfPeople[indexPath.row].species
-            cell.gender.text = arrayOfPeople[indexPath.row].gender
-            cell.origin.text = "Origin:\(arrayOfPeople[indexPath.row].origin.name)"
-            cell.location.text = "Location:\(arrayOfPeople[indexPath.row].location.name)"
-            
-        let imageURL = URL(string: arrayOfPeople[indexPath.row].image)
-        guard let url = imageURL, let imageData = try? Data(contentsOf: url) else { return }
-            DispatchQueue.main.async {
-                cell.image.image = UIImage(data: imageData)
-                cell.indicator.stopAnimating()
-            }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.6)
+        guard let customCell = cell as? CustomCell else { return cell}
+            customCell.name.text = arrayOfCharacters[indexPath.row].name
+            customCell.species.text = arrayOfCharacters[indexPath.row].species
+            customCell.gender.text = arrayOfCharacters[indexPath.row].gender
+            customCell.origin.text = "Origin:\(arrayOfCharacters[indexPath.row].origin.name)"
+            customCell.location.text = "Location:\(arrayOfCharacters[indexPath.row].location.name)"
+        if arrayOfImage.count == arrayOfCharacters.count {
+            customCell.image.image = UIImage(data: arrayOfImage[indexPath.row])
+            customCell.indicator.stopAnimating()
         }
-        return cell
+        return customCell
     }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let view = FooterView()
+        view.backgroundColor = UIColor(white: 1, alpha: 0.2)
+        view.nextButton.addTarget(self, action: #selector(nextButton), for: .touchUpInside)
+        view.backButton.addTarget(self, action: #selector(backButton), for: .touchUpInside)
+        return view
+    }
+    @objc func nextButton() {
+        arrayOfImage.removeAll()
+        arrayOfCharacters.removeAll()
+        loadJSON(nextPage)
+    }
+    @objc func backButton() {
+        arrayOfImage.removeAll()
+        arrayOfCharacters.removeAll()
+        loadJSON(prevPage)
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        45
+    }
+    // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 }
 
 extension CharactersVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let name = arrayOfPeople[indexPath.row].name
-        let species = arrayOfPeople[indexPath.row].species
-        let gender = arrayOfPeople[indexPath.row].gender
-        let origin = arrayOfPeople[indexPath.row].origin.name
-        let location = arrayOfPeople[indexPath.row].location.name
-        
-        let vc = InfoVC()
-        let imageURL = URL(string: arrayOfPeople[indexPath.row].image)
-        guard let url = imageURL, let imageData = try? Data(contentsOf: url) else { return }
-            DispatchQueue.main.async {
-                vc.setImageCharacter(data: imageData)
-            }
-        vc.getInfo(name: name, species: species, gender: gender, origin: origin, location: location)
-        vc.setInfoView()
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .flipHorizontal
-        present(vc, animated: true)
+        let name = arrayOfCharacters[indexPath.row].name
+        let species = arrayOfCharacters[indexPath.row].species
+        let gender = arrayOfCharacters[indexPath.row].gender
+        let origin = arrayOfCharacters[indexPath.row].origin.name
+        let location = arrayOfCharacters[indexPath.row].location.name
+        let controller = InfoVC()
+        controller.getInfo(name: name, species: species, gender: gender, origin: origin, location: location)
+        controller.setInfoView()
+        navigationController?.pushViewController(controller, animated: true)
     }
-    
 }

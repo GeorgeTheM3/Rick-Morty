@@ -6,46 +6,50 @@
 //
 
 import Foundation
-import UIKit
 import SnapKit
+import UIKit
 
 class CustomCell: UITableViewCell {
     private(set) lazy var image: UIImageView = {
-        let img = UIImageView()
-        img.contentMode = .scaleAspectFit
-        return img
+        let view = UIImageView()
+        view.contentMode = .scaleAspectFill
+        view.layer.cornerRadius = 20
+        view.clipsToBounds = true
+        view.layer.borderColor = CGColor(gray: 0, alpha: 1)
+        view.layer.borderWidth = 2
+        return view
     }()
-    
+
     private(set) lazy var name: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont(name: "AlNile-Bold", size: 16)
         return lbl
     }()
-    
+
     private(set) lazy var species: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont(name: "Al Nile", size: 12)
         return lbl
     }()
-    
+
     private(set) lazy var gender: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont(name: "Al Nile", size: 12)
         return lbl
     }()
-    
+
     private(set) lazy var origin: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont(name: "Al Nile", size: 12)
         return lbl
     }()
-    
+
     private(set) lazy var location: UILabel = {
         let lbl = UILabel()
         lbl.font = UIFont(name: "Al Nile", size: 12)
         return lbl
     }()
-    
+
     private(set) lazy var indicator: UIActivityIndicatorView = {
         let indicator = UIActivityIndicatorView()
         indicator.isHidden = false
@@ -53,7 +57,7 @@ class CustomCell: UITableViewCell {
         indicator.hidesWhenStopped = true
         return indicator
     }()
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setViews()
@@ -65,9 +69,9 @@ class CustomCell: UITableViewCell {
         setLocation()
         setIndicator()
     }
-    
-    required init?(coder Decoder: NSCoder) {
-        super.init(coder: Decoder)
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         setViews()
         setImage()
         setName()
@@ -77,21 +81,17 @@ class CustomCell: UITableViewCell {
         setLocation()
         setIndicator()
     }
-    
-//    override func awakeFromNib() {
-//           super.awakeFromNib()
-//       }
-    
+
     private func setViews() {
         addSubview(image)
         addSubview(name)
-        addSubview(indicator)
         addSubview(species)
         addSubview(gender)
         addSubview(origin)
         addSubview(location)
+        addSubview(indicator)
     }
-    
+
     private func setImage() {
         image.snp.makeConstraints { make in
             make.leading.equalTo(10)
@@ -100,42 +100,42 @@ class CustomCell: UITableViewCell {
             make.width.equalTo(110)
         }
     }
-    
+
     private func setName() {
         name.snp.makeConstraints { make in
             make.top.equalTo(10)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
     }
-    
+
     private func setSpecies() {
         species.snp.makeConstraints { make in
             make.top.equalTo(name.snp.bottom)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
     }
-    
+
     private func setGender() {
         gender.snp.makeConstraints { make in
             make.top.equalTo(name.snp.bottom)
             make.leading.equalTo(species.snp.trailing).offset(10)
         }
     }
-    
+
     private func setOrigin() {
         origin.snp.makeConstraints { make in
             make.bottom.equalTo(location.snp.top)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
     }
-    
+
     private func setLocation() {
         location.snp.makeConstraints { make in
             make.bottom.equalTo(contentView.snp.bottom).offset(-5)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
     }
-    
+
     private func setIndicator() {
         indicator.snp.makeConstraints { make in
             make.center.equalTo(image.snp.center)

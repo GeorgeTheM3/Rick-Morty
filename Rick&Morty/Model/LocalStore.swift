@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import UIKit
+var charactersURL = "https://rickandmortyapi.com/api/character"
+var nextPage = ""
+var prevPage = ""
 
-let charactersURL = "https://rickandmortyapi.com/api/character"
+var arrayOfCharacters: [Result] = []
 
-var arrayOfPeople: [Result] = []
-
+var arrayOfImage: [Data] = []
