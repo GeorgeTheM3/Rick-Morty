@@ -12,7 +12,8 @@ class Episode: UIView {
     private(set) lazy var tableView: UITableView = {
         let view = UITableView()
         view.register(CharacterCell.self, forCellReuseIdentifier: "cell")
-        view.register(<#T##nib: UINib?##UINib?#>, forCellReuseIdentifier: <#T##String#>)
+//        view.register(HeaderEpisode.self, forHeaderFooterViewReuseIdentifier: "header")
+        view.register(HeaderView.self, forHeaderFooterViewReuseIdentifier: "header")
         return view
     }()
 

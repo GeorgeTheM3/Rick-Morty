@@ -50,17 +50,17 @@ class HeaderView: UITableViewHeaderFooterView {
         return view
     }()
 
-    private(set) lazy var origin: UILabel = {
-        let lbl = UILabel()
-        lbl.font = UIFont(name: "Al Nile", size: 20)
-        return lbl
-    }()
-
-    private(set) lazy var location: UILabel = {
-        let lbl = UILabel()
-        lbl.font = UIFont(name: "Al Nile", size: 20)
-        return lbl
-    }()
+//    private(set) lazy var origin: UILabel = {
+//        let lbl = UILabel()
+//        lbl.font = UIFont(name: "Al Nile", size: 20)
+//        return lbl
+//    }()
+//
+//    private(set) lazy var location: UILabel = {
+//        let lbl = UILabel()
+//        lbl.font = UIFont(name: "Al Nile", size: 20)
+//        return lbl
+//    }()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -85,8 +85,6 @@ class HeaderView: UITableViewHeaderFooterView {
         addSubview(name)
         addSubview(species)
         addSubview(gender)
-//        addSubview(origin)
-//        addSubview(location)
     }
 
     private func setImageCharacter() {

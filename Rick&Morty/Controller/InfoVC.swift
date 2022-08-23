@@ -50,8 +50,6 @@ class InfoVC: UIViewController {
         view.name.text = name
         view.species.text = species
         view.gender.text = gender
-        view.origin.text = origin
-        view.location.text = location
         view.imageCharacter.image = image
     }
 }

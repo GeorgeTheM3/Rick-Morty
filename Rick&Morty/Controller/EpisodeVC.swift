@@ -90,11 +90,29 @@ extension EpisodeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
     }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? HeaderEpisode {
+//            view.titleEpisode.text = nameEpisode
+//            view.idEpisode.text = String(id)
+//            return view
+//        }
+//        return nil
+        if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "header") as? HeaderView {
+            view.name.text = nameEpisode
+            return view
+        }
+        return nil
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        80
+    }
 }
 
 extension EpisodeVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(curentEpisodeCharactersUrls)
-        print(curentEpisodeCharacters)
+        print(nameEpisode)
+        tableView.reloadData()
     }
 }
