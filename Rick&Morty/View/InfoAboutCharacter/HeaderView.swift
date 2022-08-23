@@ -15,16 +15,8 @@ class HeaderView: UITableViewHeaderFooterView {
         view.layer.cornerRadius = 20
         view.clipsToBounds = true
         view.layer.borderColor = CGColor(gray: 0, alpha: 1)
-        view.layer.borderWidth = 2
+        view.layer.borderWidth = 5
         return view
-    }()
-
-    private(set) lazy var indicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView()
-        indicator.isHidden = false
-        indicator.startAnimating()
-        indicator.hidesWhenStopped = true
-        return indicator
     }()
 
     private(set) lazy var name: UILabel = {
@@ -59,18 +51,6 @@ class HeaderView: UITableViewHeaderFooterView {
         view.font = UIFont(name: "AlNile-Bold", size: 20)
         return view
     }()
-
-//    private(set) lazy var origin: UILabel = {
-//        let lbl = UILabel()
-//        lbl.font = UIFont(name: "Al Nile", size: 20)
-//        return lbl
-//    }()
-//
-//    private(set) lazy var location: UILabel = {
-//        let lbl = UILabel()
-//        lbl.font = UIFont(name: "Al Nile", size: 20)
-//        return lbl
-//    }()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)

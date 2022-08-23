@@ -105,7 +105,7 @@ extension InfoVC: UITableViewDataSource {
 
 extension InfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        450
+        460
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

@@ -17,8 +17,8 @@ class CustomInfoCell: UITableViewCell {
         private(set) lazy var name: UILabel = {
             let view = UILabel()
             view.font = UIFont(name: "AlNile-Bold", size: 16)
-            view.backgroundColor = .black
-            view.textColor = .white
+            view.backgroundColor = .clear
+            view.textColor = .black
             view.layer.cornerRadius = 5
             view.clipsToBounds = true
             view.textAlignment = .center
