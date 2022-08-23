@@ -31,8 +31,8 @@ class HeaderView: UITableViewHeaderFooterView {
         let view = UILabel()
         view.font = UIFont(name: "AlNile-Bold", size: 40)
         view.clipsToBounds = true
-        view.textColor = .black
-        view.backgroundColor = .orange
+        view.textColor = .white
+        view.backgroundColor = .black
         view.textAlignment = .center
         view.layer.cornerRadius = 15
         return view
@@ -41,8 +41,8 @@ class HeaderView: UITableViewHeaderFooterView {
     private(set) lazy var species: UILabel = {
         let view = UILabel()
         view.clipsToBounds = true
-        view.textColor = .black
-        view.backgroundColor = .orange
+        view.textColor = .white
+        view.backgroundColor = .black
         view.textAlignment = .center
         view.layer.cornerRadius = 15
         view.font = UIFont(name: "AlNile-Bold", size: 20)
@@ -52,8 +52,8 @@ class HeaderView: UITableViewHeaderFooterView {
     private(set) lazy var gender: UILabel = {
         let view = UILabel()
         view.clipsToBounds = true
-        view.textColor = .black
-        view.backgroundColor = .orange
+        view.textColor = .white
+        view.backgroundColor = .black
         view.textAlignment = .center
         view.layer.cornerRadius = 15
         view.font = UIFont(name: "AlNile-Bold", size: 20)

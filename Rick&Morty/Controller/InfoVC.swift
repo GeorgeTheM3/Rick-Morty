@@ -21,6 +21,27 @@ class InfoVC: UIViewController {
         return view
     }
 
+    private func loadJSON() {
+        for item in arrayOfCharacters where item.name == name {
+            for url in item.episode {
+                NetworkManager.shared.fetchEpisodeData(url: url) { episode in
+                    arrayOfCharacterEpisod.append(episode)
+                    DispatchQueue.main.async {
+                        self.infoView.tableView.reloadData()
+                    }
+                }
+            }
+        }
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        loadJSON()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        arrayOfCharacterEpisod.removeAll()
+    }
+
     override func loadView() {
         super.loadView()
         self.view = InfoView()
@@ -29,9 +50,6 @@ class InfoVC: UIViewController {
         super.viewDidLoad()
         infoView.tableView.dataSource = self
         infoView.tableView.delegate = self
-    }
-    func setImageCharacter(data: Data) {
-//        infoView.imageCharacter.image = UIImage(data: data)
     }
 
     func getInfo(name: String, species: String, gender: String, origin: String, location: String) {
@@ -56,21 +74,20 @@ class InfoVC: UIViewController {
 
 extension InfoVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var rows = 0
-        for character in arrayOfCharacters where character.name == self.name {
-            rows = character.episode.count
-        }
-        return rows
+//        var rows = 0
+//        for character in arrayOfCharacters where character.name == self.name {
+//            rows = character.episode.count
+//        }
+//        return rows
+        arrayOfCharacterEpisod.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
         guard let customCell = cell as? CustomInfoCell else { return cell}
         customCell.backgroundColor = UIColor(white: 1, alpha: 0.8)
-        for character in arrayOfCharacters where character.name == self.name {
-            customCell.name.text = character.episode[indexPath.row]
+            customCell.name.text = arrayOfCharacterEpisod[indexPath.row].name
             customCell.id.text = String(indexPath.row + 1)
-        }
         return cell
     }
 
@@ -94,8 +111,11 @@ extension InfoVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let controller = EpisodeVC()
         for character in arrayOfCharacters where character.name == self.name {
-            controller.setUrlEpisode(url: character.episode[indexPath.row])
+            let url = character.episode[indexPath.row]
+            let name = arrayOfCharacterEpisod[indexPath.row].name
+            controller.setUrlEpisode(url: url, name: name)
         }
+        curentEpisodeCharactersUrls = arrayOfCharacterEpisod[indexPath.row].characters
         navigationController?.pushViewController(controller, animated: true)
     }
 }

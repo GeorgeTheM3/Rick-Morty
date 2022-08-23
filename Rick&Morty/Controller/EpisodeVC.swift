@@ -21,25 +21,18 @@ class EpisodeVC: UIViewController {
     }
 
     private func loadJSON(_ url: String) {
-        NetworkManager.shared.fetchEpisodeData(url: url) { episode in
-            DispatchQueue.main.async {
-                self.nameEpisode = episode.name
-                self.id = episode.id
-                curentEpisodeCharactersUrls = episode.characters
-
-                for item in curentEpisodeCharactersUrls {
-                    NetworkManager.shared.fetchDataResult(url: item) { chareacter in
-                        curentEpisodeCharacters.append(chareacter)
-                        DispatchQueue.global(qos: .userInitiated).sync {
-                            NetworkManager.shared.loadImages2(url: chareacter.image) {
-                                DispatchQueue.main.async {
-                                    self.episodeView.tableView.reloadData()
-                                }
+        DispatchQueue.global(qos: .userInitiated).async {
+            for item in curentEpisodeCharactersUrls {
+                NetworkManager.shared.fetchDataResult(url: item) { chareacter in
+                    curentEpisodeCharacters.append(chareacter)
+                    DispatchQueue.global().sync {
+                        NetworkManager.shared.loadImages2(url: chareacter.image) {
+                            DispatchQueue.main.async {
+                                self.episodeView.tableView.reloadData()
                             }
                         }
                     }
                 }
-                self.episodeView.tableView.reloadData()
             }
         }
     }
@@ -59,14 +52,16 @@ class EpisodeVC: UIViewController {
         self.view = Episode()
         episodeView.tableView.dataSource = self
         episodeView.tableView.delegate = self
+        episodeView.tableView.backgroundColor = .clear
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
-    func setUrlEpisode(url: String) {
+    func setUrlEpisode(url: String, name: String) {
         urlOfEpisode = url
+        nameEpisode = name
     }
 }
 

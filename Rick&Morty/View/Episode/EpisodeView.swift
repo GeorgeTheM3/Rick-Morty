@@ -9,6 +9,14 @@ import Foundation
 import UIKit
 
 class Episode: UIView {
+
+    private(set) lazy var backImage: UIImageView = {
+        let view = UIImageView()
+        view.image = UIImage(named: "RickAndMorty")
+        view.contentMode = .scaleAspectFill
+        return view
+    }()
+
     private(set) lazy var tableView: UITableView = {
         let view = UITableView()
         view.register(CharacterCell.self, forCellReuseIdentifier: "cell")
@@ -29,10 +37,12 @@ class Episode: UIView {
     }
 
     private func addViews() {
+        addSubview(backImage)
         addSubview(tableView)
     }
     private func setViews() {
         setTableView()
+        setBackgroundView()
     }
 
     private func setTableView() {
@@ -40,6 +50,14 @@ class Episode: UIView {
             make.top.equalTo(safeAreaLayoutGuide)
             make.width.equalTo(safeAreaLayoutGuide)
             make.bottom.equalTo(safeAreaLayoutGuide)
+        }
+    }
+
+    private func setBackgroundView() {
+        backImage.snp.makeConstraints { make in
+            make.top.equalTo(0)
+            make.bottom.equalTo(0)
+            make.width.equalTo(tableView.snp.width)
         }
     }
 }

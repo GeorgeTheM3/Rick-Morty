@@ -47,19 +47,19 @@ class CharactersVC: UIViewController {
         super.viewDidLoad()
         charectersView.tableView.dataSource = self
         charectersView.tableView.delegate = self
-//        charectersView.tableView.tableFooterView.nextButton.addTarget(self, action: #selector(nextButton), for: .touchUpInside)
-//        charectersView.tableView.tableFooterView.backButton.addTarget(self, action: #selector(backButton), for: .touchUpInside)
+        charectersView.nextButton.addTarget(self, action: #selector(nextButton), for: .touchUpInside)
+        charectersView.backButton.addTarget(self, action: #selector(backButton), for: .touchUpInside)
     }
-//        @objc func nextButton() {
-//            arrayOfImage.removeAll()
-//            arrayOfCharacters.removeAll()
-//            loadJSON(nextPage)
-//        }
-//        @objc func backButton() {
-//            arrayOfImage.removeAll()
-//            arrayOfCharacters.removeAll()
-//            loadJSON(prevPage)
-//        }
+        @objc func nextButton() {
+            arrayOfImage.removeAll()
+            arrayOfCharacters.removeAll()
+            loadJSON(nextPage)
+        }
+        @objc func backButton() {
+            arrayOfImage.removeAll()
+            arrayOfCharacters.removeAll()
+            loadJSON(prevPage)
+        }
 }
 
 extension CharactersVC: UITableViewDataSource {
@@ -78,19 +78,10 @@ extension CharactersVC: UITableViewDataSource {
         if arrayOfImage.count == arrayOfCharacters.count {
             customCell.image.image = UIImage(data: arrayOfImage[indexPath.row])
             customCell.indicator.stopAnimating()
+        } else {
+            customCell.indicator.startAnimating()
         }
         return customCell
-    }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "footer") as? FooterView {
-            return view
-        }
-            return nil
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        45
     }
 }
 
@@ -111,7 +102,6 @@ extension CharactersVC: UITableViewDelegate {
             guard let image = UIImage(data: arrayOfImage[indexPath.row]) else { return }
             controller.getImage(image: image)
         }
-
         controller.getInfo(name: name, species: species, gender: gender, origin: origin, location: location)
         controller.setInfoView()
         navigationController?.pushViewController(controller, animated: true)

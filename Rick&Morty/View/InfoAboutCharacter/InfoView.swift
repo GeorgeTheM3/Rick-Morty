@@ -12,7 +12,7 @@ import UIKit
 class InfoView: UIView {
     private(set) lazy var backImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage(named: "rick_morty")
+        view.image = UIImage(named: "rick")
         view.contentMode = .scaleAspectFill
         return view
     }()
