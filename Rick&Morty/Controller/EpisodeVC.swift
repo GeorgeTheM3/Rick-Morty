@@ -30,7 +30,7 @@ class EpisodeVC: UIViewController {
                 for item in curentEpisodeCharactersUrls {
                     NetworkManager.shared.fetchDataResult(url: item) { chareacter in
                         curentEpisodeCharacters.append(chareacter)
-                        DispatchQueue.global(qos: .userInitiated).async {
+                        DispatchQueue.global(qos: .userInitiated).sync {
                             NetworkManager.shared.loadImages2(url: chareacter.image) {
                                 DispatchQueue.main.async {
                                     self.episodeView.tableView.reloadData()
@@ -80,9 +80,11 @@ extension EpisodeVC: UITableViewDataSource {
         cell.backgroundColor = UIColor(white: 1, alpha: 0.6)
         guard let customCell = cell as? CharacterCell else { return cell}
         customCell.name.text = curentEpisodeCharacters[indexPath.row].name
-        if curentEpisodeCharacters.count == curentEpisodeCharactersImage.count {
+
+        if curentEpisodeCharactersImage.count == curentEpisodeCharactersUrls.count {
             let image = UIImage(data: curentEpisodeCharactersImage[indexPath.row])
             customCell.image.image = image
+            customCell.indicator.stopAnimating()
         }
         return customCell
     }

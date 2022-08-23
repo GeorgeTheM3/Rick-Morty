@@ -31,8 +31,8 @@ class HeaderView: UITableViewHeaderFooterView {
         let view = UILabel()
         view.font = UIFont(name: "AlNile-Bold", size: 40)
         view.clipsToBounds = true
-        view.textColor = .white
-        view.backgroundColor = .black
+        view.textColor = .black
+        view.backgroundColor = .orange
         view.textAlignment = .center
         view.layer.cornerRadius = 15
         return view
@@ -40,12 +40,22 @@ class HeaderView: UITableViewHeaderFooterView {
 
     private(set) lazy var species: UILabel = {
         let view = UILabel()
+        view.clipsToBounds = true
+        view.textColor = .black
+        view.backgroundColor = .orange
+        view.textAlignment = .center
+        view.layer.cornerRadius = 15
         view.font = UIFont(name: "AlNile-Bold", size: 20)
         return view
     }()
 
     private(set) lazy var gender: UILabel = {
         let view = UILabel()
+        view.clipsToBounds = true
+        view.textColor = .black
+        view.backgroundColor = .orange
+        view.textAlignment = .center
+        view.layer.cornerRadius = 15
         view.font = UIFont(name: "AlNile-Bold", size: 20)
         return view
     }()
@@ -104,12 +114,14 @@ class HeaderView: UITableViewHeaderFooterView {
         species.snp.makeConstraints { make in
             make.top.equalTo(name.snp.bottom).offset(10)
             make.centerX.equalTo(name.snp.centerX)
+            make.width.equalTo(150)
         }
     }
     private func setGender() {
         gender.snp.makeConstraints { make in
             make.top.equalTo(species.snp.bottom).offset(10)
             make.centerX.equalTo(species.snp.centerX)
+            make.width.equalTo(150)
         }
     }
 
