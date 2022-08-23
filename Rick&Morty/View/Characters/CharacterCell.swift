@@ -9,7 +9,7 @@ import Foundation
 import SnapKit
 import UIKit
 
-class CustomCell: UITableViewCell {
+class CharacterCell: UITableViewCell {
     private(set) lazy var image: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
@@ -21,20 +21,25 @@ class CustomCell: UITableViewCell {
     }()
 
     private(set) lazy var name: UILabel = {
-        let lbl = UILabel()
-        lbl.font = UIFont(name: "AlNile-Bold", size: 16)
-        return lbl
+        let view = UILabel()
+        view.font = UIFont(name: "AlNile-Bold", size: 16)
+        view.backgroundColor = .black
+        view.textColor = .white
+        view.layer.cornerRadius = 5
+        view.clipsToBounds = true
+        view.textAlignment = .center
+        return view
     }()
 
     private(set) lazy var species: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "Al Nile", size: 12)
+        lbl.font = UIFont(name: "Al Nile", size: 20)
         return lbl
     }()
 
     private(set) lazy var gender: UILabel = {
         let lbl = UILabel()
-        lbl.font = UIFont(name: "Al Nile", size: 12)
+        lbl.font = UIFont(name: "Al Nile", size: 20)
         return lbl
     }()
 
@@ -104,6 +109,8 @@ class CustomCell: UITableViewCell {
     private func setName() {
         name.snp.makeConstraints { make in
             make.top.equalTo(10)
+            make.height.equalTo(25)
+            make.trailing.equalTo(contentView.snp.trailing).offset(-10)
             make.leading.equalTo(image.snp.trailing).offset(10)
         }
     }
@@ -118,7 +125,7 @@ class CustomCell: UITableViewCell {
     private func setGender() {
         gender.snp.makeConstraints { make in
             make.top.equalTo(name.snp.bottom)
-            make.leading.equalTo(species.snp.trailing).offset(10)
+            make.trailing.equalTo(name.snp.trailing)
         }
     }
 

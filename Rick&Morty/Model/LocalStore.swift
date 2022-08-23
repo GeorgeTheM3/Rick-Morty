@@ -13,4 +13,8 @@ var prevPage = ""
 
 var arrayOfCharacters: [Result] = []
 
+var curentEpisodeCharactersUrls: [String] = []
+var curentEpisodeCharacters: [Result] = []
+var curentEpisodeCharactersImage: [Data] = []
+
 var arrayOfImage: [Data] = []

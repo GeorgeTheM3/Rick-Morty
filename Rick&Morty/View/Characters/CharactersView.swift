@@ -14,7 +14,8 @@ class CharactersView: UIView {
 //        как задать размер width heigh?
 //        tv.frame = CGRect(x: 0, y: 0, width: 400, height: 900)
         view.backgroundColor = .clear
-        view.register(CustomCell.self, forCellReuseIdentifier: "cell")
+        view.register(CharacterCell.self, forCellReuseIdentifier: "cell")
+        view.register(FooterView.self, forHeaderFooterViewReuseIdentifier: "footer")
         return view
     }()
 

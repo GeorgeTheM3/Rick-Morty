@@ -8,11 +8,13 @@
 import Foundation
 import UIKit
 
-class FooterView: UIView {
+class FooterView: UITableViewHeaderFooterView {
     private(set) lazy var nextButton: UIButton = {
         let view = UIButton()
         view.setTitle("Next", for: .normal)
         view.backgroundColor = .black
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 10
         return view
     }()
 
@@ -20,15 +22,18 @@ class FooterView: UIView {
         let view = UIButton()
         view.setTitle("Back", for: .normal)
         view.backgroundColor = .black
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 10
         return view
     }()
 
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         addViews()
         setNextButton()
         setBackButton()
     }
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         addViews()
